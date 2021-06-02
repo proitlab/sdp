@@ -86,7 +86,7 @@ JAZZMIN_SETTINGS = {
         "data.itemdetail": "fas fa-info-circle",
         "data.location": "fas fa-map-marked",    
         "data.vendor": "fas fa-shipping-fast",  
-        "data.technical": "fas fa-at",    
+        "data.technical": "fas fa-at    ",    
     },
     # Icons that are used when one is not manually specified
     "default_icon_parents": "fas fa-chevron-circle-right",
