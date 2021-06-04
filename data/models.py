@@ -112,21 +112,46 @@ class Condition(models.Model):
         self.full_clean()
         return super(Condition, self).save(*args, **kwargs)
 
+class Status(models.Model):
+    class Meta:
+        db_table = 'Status'
+        verbose_name_plural = 'Status'
+
+    status = models.CharField(max_length=50)
+
+    created_at = models.DateTimeField(auto_now=False, auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True, auto_now_add=False)
+
+    def __str__(self):
+        return "%s" % self.status
+
+    def clean(self):
+        self.status = self.status.upper()
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        return super(Status, self).save(*args, **kwargs)
+
+
 class Items(models.Model):
     class Meta:
         db_table = 'items'
         verbose_name_plural = 'Items'
 
-    item_detail = models.ForeignKey(ItemDetail, on_delete=models.PROTECT)
+    item_name = models.ForeignKey(ItemDetail, on_delete=models.PROTECT)
     vendor = models.ForeignKey(Vendor, on_delete=models.PROTECT)
     location = models.ForeignKey(Location, on_delete=models.PROTECT)
     technical = models.ForeignKey(Technical, on_delete=models.PROTECT)
     condition = models.ForeignKey(Condition, on_delete=models.PROTECT)
+    status = models.ForeignKey(Status, on_delete=models.PROTECT)
 
     serialnumber = models.CharField(max_length=50, unique=True)
     date_accept = models.DateField()
+    reason_accept = models.CharField(max_length=100, blank=True)
     date_out = models.DateField(null=True, blank=True)
+    reason_out = models.CharField(max_length=100, blank=True)
     date_in = models.DateField(null=True, blank=True)
+    reason_in = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return "%s" % self.serialnumber
